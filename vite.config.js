@@ -5,4 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base: "/workout_now/",
   plugins: [react()],
+  optimizeDeps: {
+    include: ['@emotion/styled'],
+  },
 })
