@@ -1,0 +1,12 @@
+.na{
+    display: flex;
+    justify-content: space-between;
+    background-color: black;
+    color: white;
+
+}
+.navtext{
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
