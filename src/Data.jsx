@@ -73,12 +73,14 @@ const submitHandler = e =>{
           <div>loading....</div>
         )} */}
         {isloader
-            ?Array(3)
+            ?Array(8)
                .fill(0)
                .map((d,i) =>
-          
+          <div className='ca'>
+              <div className="d-flex justify-content-around">
+      
         <Card style={{ width: '18rem'}}>
-        <Card.Img variant="top" src="" />
+        <Placeholder style={{ width: '100%',height: '300px'}}/>
         <Card.Body>
           <Placeholder as={Card.Title} animation="glow">
             <Placeholder xs={6} />
@@ -89,7 +91,9 @@ const submitHandler = e =>{
           </Placeholder>
           <Placeholder.Button variant="primary" xs={6} />
         </Card.Body>
-      </Card>)
+      </Card> 
+      </div>
+      </div>)
       
       
         :container.map((item,index)=>{
