@@ -25,32 +25,11 @@ function App() {
     })     
 },[finalPoint])
 
-//   const  fetchme = async ()=> { 
-
-//   fetch(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${endPoint}`,{
-//     method: await 'GET',
-//     headers: {
-//       'X-RapidAPI-Key': '50810e21damshe5cdbabe09cb515p11a138jsnfec4fc23f06b',
-//       'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'}
-// })
-
-// .then ( response => {
-//   return response.json();
-// })	
-
-// .then(data =>{
-//   console.log(data)
-//   setloader(false);
-//   setContainer(data)
-// })
-
-// .catch (error => {
-// 	console.error(error);
-// })
-// }
 
 function onchangeHandler(e){
-  setPoint(e.target.value)
+  
+  setPoint(e.target.value.toLowerCase())
+
 }
 
 const submitHandler = e =>{
@@ -60,23 +39,20 @@ const submitHandler = e =>{
 
   return (
     <div >
-      
       <form onSubmit={submitHandler}  className='fd'>
         <center><h2>SEARCH THE BODYPART YOU WANT TO TRAIN</h2></center>
         
-                <center>  <input type="text" className='inputField'  value={endPoint} onChange={onchangeHandler}/>
+        <center>  <input type="text" className='inputField'  value={endPoint} onChange={onchangeHandler}/>
       <button type='submit' className='btn btn-primary'>submit</button>
       </center>
       <h1>SHOWING RESULT</h1>
       <div className='car'>
-        {/* {container?.length === 0 && (
-          <div>loading....</div>
-        )} */}
+       
         {isloader
             ?Array(8)
                .fill(0)
                .map((d,i) =>
-          <div className='ca'>
+          <div className='ca' key={i}>
               <div className="d-flex justify-content-around">
       
         <Card style={{ width: '18rem'}}>
@@ -89,7 +65,6 @@ const submitHandler = e =>{
             <Placeholder xs={7} /> <Placeholder xs={4} /> <Placeholder xs={4} />{' '}
             <Placeholder xs={6} /> <Placeholder xs={8} />
           </Placeholder>
-          <Placeholder.Button variant="primary" xs={6} />
         </Card.Body>
       </Card> 
       </div>
