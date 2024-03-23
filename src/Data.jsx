@@ -11,43 +11,43 @@ function App() {
   const [container,setContainer]=useState([])
   const [isloader,setloader]=useState(true);
   const [finalPoint,setFinalPoint]=useState('');
-  const [title,setTitle]=useState("");
 
   useEffect(()=>{
-    fetchme()
-  },[finalPoint])
-
-
-  useEffect(()=>{
-    setTimeout(() => {
-      setloader(false);
-      setTitle("SEARCH THE MOVIE YOU WANT");
-    }, 2000);
-  },[])
-
-  const  fetchme = async ()=> { 
-
-  fetch(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${endPoint}`,{
-    method: await 'GET',
+    fetch(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${endPoint}`,{
+    method:'GET',
     headers: {
       'X-RapidAPI-Key': '50810e21damshe5cdbabe09cb515p11a138jsnfec4fc23f06b',
       'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'}
-})
+} ) .then((res)=>res.json())
+    .then((data)=>{
+      setContainer(data);
+      setloader(false);
+    })     
+},[finalPoint])
 
-.then ( response => {
-  return response.json();
-})	
+//   const  fetchme = async ()=> { 
 
-.then(data =>{
-  console.log(data)
-  setloader(false);
-  setContainer(data)
-})
+//   fetch(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${endPoint}`,{
+//     method: await 'GET',
+//     headers: {
+//       'X-RapidAPI-Key': '50810e21damshe5cdbabe09cb515p11a138jsnfec4fc23f06b',
+//       'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'}
+// })
 
-.catch (error => {
-	console.error(error);
-})
-}
+// .then ( response => {
+//   return response.json();
+// })	
+
+// .then(data =>{
+//   console.log(data)
+//   setloader(false);
+//   setContainer(data)
+// })
+
+// .catch (error => {
+// 	console.error(error);
+// })
+// }
 
 function onchangeHandler(e){
   setPoint(e.target.value)
@@ -62,23 +62,22 @@ const submitHandler = e =>{
     <div >
       
       <form onSubmit={submitHandler}  className='fd'>
-        <center><h2> {title || <Skeleton />} </h2></center>
+        <center><h2>SEARCH THE BODYPART YOU WANT TO TRAIN</h2></center>
         
                 <center>  <input type="text" className='inputField'  value={endPoint} onChange={onchangeHandler}/>
       <button type='submit' className='btn btn-primary'>submit</button>
-      {container?.length ===0 && (<h4>Example:Back,neck...</h4>)}
       </center>
       <h1>SHOWING RESULT</h1>
       <div className='car'>
-        {container?.length === 0 && (
+        {/* {container?.length === 0 && (
           <div>loading....</div>
-        )}
-        {container?.length > 0 && container.map((item,index)=>{
-        return(
+        )} */}
+        {isloader
+            ?Array(3)
+               .fill(0)
+               .map((d,i) =>
           
-          <div key={index} className='card'>
-            {container?.length === 0 &&(
-            <Card style={{ width: '18rem' }}>
+        <Card style={{ width: '18rem'}}>
         <Card.Img variant="top" src="" />
         <Card.Body>
           <Placeholder as={Card.Title} animation="glow">
@@ -90,12 +89,17 @@ const submitHandler = e =>{
           </Placeholder>
           <Placeholder.Button variant="primary" xs={6} />
         </Card.Body>
-      </Card>
-      )}
+      </Card>)
+      
+      
+        :container.map((item,index)=>{
+        return(
+          
+          <div key={index} className='ca'>
           <hr className='hr' />
           <div className="d-flex justify-content-around">
       <Card style={{ width: '18rem',border:'none'}}>
-        <Card.Img variant="top" src={item.gifUrl} />
+        <Card.Img variant="top" src={item.gifUrl || "https://v2.exercisedb.io/image/hprHMp7AO9TKr7"} />
         <Card.Body>
           <Card.Title>Name: {item.name}</Card.Title>
           <Card.Text>

@@ -4,11 +4,14 @@
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
-.card{
+.ca{
     margin-right: 10px;
     margin-bottom: 20px;
     margin-left: 10px;
     
+}
+.ca:hover{
+  box-shadow: 5px 5px 40px  grey;
 }
 .hr{
     border: none;
