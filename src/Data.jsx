@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
+import { exerciseOptions } from './fetchData'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import { Card } from 'react-bootstrap';
 import Placeholder from 'react-bootstrap/Placeholder';
 
-function App() {
+function App({endPoint,setPoint}) {
   
-  const [endPoint,setPoint]=useState('neck')
   const [container,setContainer]=useState([])
   const [isloader,setloader]=useState(true);
   const [finalPoint,setFinalPoint]=useState('');
+  const [url,seturl]= useState('https://exercisedb.p.rapidapi.com/exercises/bodyPart');
 
   useEffect(()=>{
-    fetch(`https://exercisedb.p.rapidapi.com/exercises/bodyPart/${endPoint}`,{
-    method:'GET',
-    headers: {
-      'X-RapidAPI-Key': '50810e21damshe5cdbabe09cb515p11a138jsnfec4fc23f06b',
-      'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'}
-} ) .then((res)=>res.json())
+    fetch(`${url}/${endPoint}`,exerciseOptions)
+    .then((res)=>res.json())
     .then((data)=>{
       setContainer(data);
       setloader(false);
@@ -41,7 +38,6 @@ const submitHandler = e =>{
     <div >
       <form onSubmit={submitHandler}  className='fd'>
         <center><h2>SEARCH THE BODYPART YOU WANT TO TRAIN</h2></center>
-        
         <center>  <input type="text" className='inputField'  value={endPoint} onChange={onchangeHandler}/>
       <button type='submit' className='btn btn-primary'>submit</button>
       </center>
@@ -75,7 +71,7 @@ const submitHandler = e =>{
         return(
           
           <div key={index} className='ca'>
-          <hr className='hr' />
+          <hr className='hr'/>
           <div className="d-flex justify-content-around">
       <Card style={{ width: '18rem',border:'none'}}>
         <Card.Img variant="top" src={item.gifUrl || "https://v2.exercisedb.io/image/hprHMp7AO9TKr7"} />
