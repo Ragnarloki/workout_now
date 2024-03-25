@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
-import { exerciseOptions } from './fetchData'
+import { exerciseOptions,youtubeOption} from './fetchData'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import { Card } from 'react-bootstrap';
@@ -12,11 +12,28 @@ function App({endPoint,setPoint}) {
   const [isloader,setloader]=useState(true);
   const [finalPoint,setFinalPoint]=useState('');
   const [url,seturl]= useState('https://exercisedb.p.rapidapi.com/exercises');
+  const [youurl,setyouurl]= useState('https://youtube-search-and-download.p.rapidapi.com/')
+  const [youtubevideo,setyoutube]=useState([])
+
+  useEffect(()=>{
+    fetch(`${youurl}search?query=${endPoint}`,youtubeOption)
+    .then((res)=>res.json())
+    .then((data)=>{
+      console.log(data.contents[0].video.thumbnails[0])
+      setyoutube(data.contents);
+      setloader(false);
+    })
+  },[finalPoint])
+
+
 
   useEffect(()=>{
 
     setTimeout(()=>{
-      if(endPoint === 'neck' || 'back')
+      if(endPoint === ('neck') || endPoint ===('back')
+      || endPoint === ('chest') || endPoint ===('shoulders')
+      || endPoint === ('cardio') || endPoint === ('upper arms') 
+      || endPoint === ('lower arms') || endPoint ===('lower legs'))
         {
     fetch(`${url}/bodyPart/${endPoint}`,exerciseOptions)
     .then((res)=>res.json())
@@ -99,8 +116,43 @@ const submitHandler = e =>{
           </div>
         )
       }
-)}
+)}   
+       
       </div>
+      <div className='car'>
+      {isloader
+            ?Array(4)
+               .fill(0)
+               .map((d,i) =>
+          <div className='ca' key={i}>
+              <div className="d-flex justify-content-around">
+      
+        <Card style={{ width: '18rem'}}>
+        <Placeholder style={{ width: '100%',height: '300px'}}/>
+        <Card.Body>
+          <Placeholder as={Card.Title} animation="glow">
+            <Placeholder xs={6} />
+          </Placeholder>
+          <Placeholder as={Card.Text} animation="glow">
+            <Placeholder xs={7} /> <Placeholder xs={4} /> <Placeholder xs={4} />{' '}
+            <Placeholder xs={6} /> <Placeholder xs={8} />
+          </Placeholder>
+        </Card.Body>
+      </Card> 
+      </div>
+      </div>)
+      
+    :youtubevideo?.slice(0,6).map((item,index)=>{
+        return(
+          <div className='car' key={index}>
+            <div className='ca'>
+              <a href={`https://www.youtube.com/watch?v=${item.video.videoId}`}>
+                <img src={item.video.thumbnails[0].url} alt="" width={400} height={200}/>
+              </a>
+              </div>
+          </div>
+        )
+      })}</div>
 </form>
    </div>
   )
