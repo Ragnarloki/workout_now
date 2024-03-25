@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 function Navbar() {
   return (
     <div className='na'>
-     <Link to={'/workout_now/'} style={{textDecoration:'none',color:'white'}}>
+     <Link to={'/exercise/'} style={{textDecoration:'none',color:'white'}}>
         <p className='navtext'>
             workout-now
         </p>

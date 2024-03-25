@@ -11,15 +11,28 @@ function App({endPoint,setPoint}) {
   const [container,setContainer]=useState([])
   const [isloader,setloader]=useState(true);
   const [finalPoint,setFinalPoint]=useState('');
-  const [url,seturl]= useState('https://exercisedb.p.rapidapi.com/exercises/bodyPart');
+  const [url,seturl]= useState('https://exercisedb.p.rapidapi.com/exercises');
 
   useEffect(()=>{
-    fetch(`${url}/${endPoint}`,exerciseOptions)
+
+    setTimeout(()=>{
+      if(endPoint === 'neck' || 'back')
+        {
+    fetch(`${url}/bodyPart/${endPoint}`,exerciseOptions)
     .then((res)=>res.json())
     .then((data)=>{
       setContainer(data);
       setloader(false);
-    })     
+    })}
+    else {
+    fetch(`${url}/target/${endPoint}`,exerciseOptions)
+    .then((res)=>res.json())
+    .then((data)=>{
+      setContainer(data);
+      setloader(false);
+    })
+    }
+  },2000)     
 },[finalPoint])
 
 
@@ -45,7 +58,7 @@ const submitHandler = e =>{
       <div className='car'>
        
         {isloader
-            ?Array(8)
+            ?Array(4)
                .fill(0)
                .map((d,i) =>
           <div className='ca' key={i}>
