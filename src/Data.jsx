@@ -16,7 +16,7 @@ function App({endPoint,setPoint}) {
   const [youtubevideo,setyoutube]=useState([])
 
   useEffect(()=>{
-    fetch(`${youurl}search?query=${endPoint}`,youtubeOption)
+    fetch(`${youurl}search?query=${endPoint}/exercise`,youtubeOption)
     .then((res)=>res.json())
     .then((data)=>{
       console.log(data.contents[0].video.thumbnails[0])
@@ -140,11 +140,16 @@ const submitHandler = e =>{
         </Card.Body>
       </Card> 
       </div>
+      <div>
+        <h1>EXAMPLES</h1>
+      </div>
+    
       </div>)
       
     :youtubevideo?.slice(0,6).map((item,index)=>{
         return(
-          <div className='car' key={index}>
+    
+    <div className='car' key={index}>
             <div className='ca'>
               <a href={`https://www.youtube.com/watch?v=${item.video.videoId}`}>
                 <img src={item.video.thumbnails[0].url} alt="" width={400} height={200}/>
