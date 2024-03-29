@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import './App.css'
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
@@ -7,8 +8,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import { Card } from 'react-bootstrap';
 import Placeholder from 'react-bootstrap/Placeholder';
-
-function App({endPoint,setPoint}) {
+import Loader from './Loader';
+function App({handleClick,endPoint,setPoint,item}) {
   
   const [container,setContainer]=useState([])
   const [isloader,setloader]=useState(true);
@@ -18,13 +19,14 @@ function App({endPoint,setPoint}) {
   const [youtubevideo,setyoutube]=useState([])
 
   useEffect(()=>{
-    fetch(`${youurl}search?query=${endPoint}/gymxexercise`,youtubeOption)
+    setTimeout(()=>{
+      fetch(`${youurl}search?query=${endPoint}/gymxexercise`,youtubeOption)
     .then((res)=>res.json())
     .then((data)=>{
-      console.log(data.contents)
       setyoutube(data.contents);
       setloader(false);
     })
+    },2000)
   },[finalPoint])
 
 
@@ -41,6 +43,7 @@ function App({endPoint,setPoint}) {
     .then((res)=>res.json())
     .then((data)=>{
       setContainer(data);
+      console.log(data)
       setloader(false);
     })}
     else {
@@ -48,6 +51,7 @@ function App({endPoint,setPoint}) {
     .then((res)=>res.json())
     .then((data)=>{
       setContainer(data);
+      console.log(data)
       setloader(false);
     })
     }
@@ -80,42 +84,13 @@ const submitHandler = e =>{
             ?Array(4)
                .fill(0)
                .map((d,i) =>
-          <div className='ca' key={i}>
-              <div className="d-flex justify-content-around">
-      
-        <Card style={{ width: '18rem'}}>
-        <Placeholder style={{ width: '100%',height: '300px'}}/>
-        <Card.Body>
-          <Placeholder as={Card.Title} animation="glow">
-            <Placeholder xs={6} />
-          </Placeholder>
-          <Placeholder as={Card.Text} animation="glow">
-            <Placeholder xs={7} /> <Placeholder xs={4} /> <Placeholder xs={4} />{' '}
-            <Placeholder xs={6} /> <Placeholder xs={8} />
-          </Placeholder>
-        </Card.Body>
-      </Card> 
-      </div>
-      </div>)
-      
+               <div className='ca' key={i}>
+                <Loader/>
+               </div>)
       
         :container.map((item,index)=>{
         return(
-          
-          <div key={index} className='ca'>
-          <hr className='hr'/>
-          <div className="d-flex justify-content-around">
-      <Card style={{ width: '18rem',border:'none'}}>
-        <Card.Img variant="top" src={item.gifUrl || "https://v2.exercisedb.io/image/hprHMp7AO9TKr7"} />
-        <Card.Body>
-          <Card.Title>Name: {item.name}</Card.Title>
-          <Card.Text>
-          Equipment: {item.equipment}
-          </Card.Text>
-        </Card.Body>
-      </Card>
-         </div>
-         </div>
+          <Card item={item} key={index} handleClick={handleClick}/>
         )
       }
 )}   
