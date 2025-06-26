@@ -23,6 +23,7 @@ function App() {
     <BrowserRouter>
        <Navbar/>
        <Routes>
+        
         <Route path='/workout_now/' element={<Home endPoint={endPoint} setPoint={setPoint}/>} />
         <Route path='/exercise/' element={<Data endPoint={endPoint} handleClick={handleClick} setPoint={setPoint}/>}/>
         <Route path='/workout_now/exercise_detail/' element={<ExerciseDetails cart={cart} setCart={setCart}/>}/>
